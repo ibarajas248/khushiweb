@@ -1,4 +1,4 @@
-const apiUrl = "http://khushiconfecciones.com/app_khushi/recycler.php?id_empresa=1";
+const apiUrl = "https://khushiconfecciones.com/app_khushi/recycler.php?id_empresa=1";
 document.addEventListener("DOMContentLoaded", function () {
     
 
@@ -78,7 +78,7 @@ function mostrarProductos(data) {
 
 function eliminarProducto(idProducto) {
     if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
-        fetch("http://khushiconfecciones.com/app_khushi/eliminar_producto.php", {
+        fetch("https://khushiconfecciones.com/app_khushi/eliminar_producto.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: `id_producto=${idProducto}`
@@ -108,7 +108,7 @@ function mostrarFormularioProducto() {
 function agregarProducto(event) {
     event.preventDefault();
     let formData = new FormData(event.target);
-    fetch("http://khushiconfecciones.com/app_khushi/insertar_producto.php", {
+    fetch("https://khushiconfecciones.com/app_khushi/insertar_producto.php", {
         method: "POST",
         body: formData
     })

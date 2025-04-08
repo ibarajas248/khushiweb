@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("ordendeCompra").textContent = decodeURIComponent(ordendeCompra);
 
         // Construye la URL de la API correctamente
-        const url = `http://khushiconfecciones.com/app_khushi/buscar_operaciones_oc.php?id_oc=${idOrdenCompra}`;
+        const url = `https://khushiconfecciones.com/app_khushi/buscar_operaciones_oc.php?id_oc=${idOrdenCompra}`;
         
         // Llama a la función para obtener los productos
         fetchProductos(url);
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // spinner 
-    const url = "http://khushiconfecciones.com/app_khushi/recycler.php?id_empresa=1"; // Reemplaza con tu URL
+    const url = "https://khushiconfecciones.com/app_khushi/recycler.php?id_empresa=1"; // Reemplaza con tu URL
             const selectProducto = document.getElementById("productoSelect");
             let idsProductos = [];
 
@@ -100,7 +100,7 @@ function redireccionar(id_oc, nombre, cantidad, precio, id) {
 
 
 document.getElementById("btnAgregarOperacion").addEventListener("click", function() {
-    const url = "http://khushiconfecciones.com/app_khushi/agregar_producto_oc.php";  // Reemplaza con la URL real
+    const url = "https://khushiconfecciones.com/app_khushi/agregar_producto_oc.php";  // Reemplaza con la URL real
     agregarProductoOC(url);
 });
 
@@ -132,7 +132,7 @@ function agregarProductoOC(url) {
     .then(data => {
         console.log("Response:", data);
         alert("Operación Exitosa");
-        const urlActualizar = `http://khushiconfecciones.com/app_khushi/buscar_operaciones_oc.php?id_oc=${idOrdenCompra}`;
+        const urlActualizar = `https://khushiconfecciones.com/app_khushi/buscar_operaciones_oc.php?id_oc=${idOrdenCompra}`;
         fetchProductos(urlActualizar); 
     })
     .catch(error => {

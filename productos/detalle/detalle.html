@@ -79,7 +79,7 @@
 
     // Cargar subpartes del producto
     if (id) {
-        fetch(`http://khushiconfecciones.com/app_khushi/buscar_subparte.php?id_producto=${id}`)
+        fetch(`https://khushiconfecciones.com/app_khushi/buscar_subparte.php?id_producto=${id}`)
             .then((response) => response.json())
             .then((data) => {
                 console.log("Datos recibidos:", data); // Verifica los datos en la consola

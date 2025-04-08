@@ -21,7 +21,7 @@ let paginaActual = 1;
 const registrosPorPagina = 20;
 
 document.addEventListener("DOMContentLoaded", function () {
-    fetch("http://khushiconfecciones.com/app_khushi/consultas_lotes/buscar_asignadas_completadas.php")
+    fetch("https://khushiconfecciones.com/app_khushi/consultas_lotes/buscar_asignadas_completadas.php")
         .then(response => response.json())
         .then(data => {
             datosCompletos = data;

@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Función para cargar las operaciones asignadas
 function cargarOperaciones(idSubparte, idProducto) {
     if (idSubparte && idProducto) {
-        fetch(`http://khushiconfecciones.com/app_khushi/buscar_operaciones_asignadas_a_producto.php?id_producto=${idProducto}&id_subparte=${idSubparte}`)
+        fetch(`https://khushiconfecciones.com/app_khushi/buscar_operaciones_asignadas_a_producto.php?id_producto=${idProducto}&id_subparte=${idSubparte}`)
             .then(response => response.json())
             .then(data => {
                 const operacionesContainer = document.getElementById("operaciones-container");
@@ -146,7 +146,7 @@ function agregarOperacion() {
     data.append("precio", precio);
 
     // Hacer la solicitud POST
-    fetch('http://khushiconfecciones.com/app_khushi/agregar_operaciones.php', {
+    fetch('https://khushiconfecciones.com/app_khushi/agregar_operaciones.php', {
         method: 'POST',
         body: data
     })
@@ -193,7 +193,7 @@ function obtenerUltimaOperacion() {
     let productoId = document.getElementById("producto-id").textContent;
     const precio = document.getElementById("precio-nuevo").value;
     // Crear un objeto FormData para enviar los parámetros como un f
-    fetch('http://khushiconfecciones.com/app_khushi/buscar_ultima_operacion.php')
+    fetch('https://khushiconfecciones.com/app_khushi/buscar_ultima_operacion.php')
     .then(response => {
         if (!response.ok) {
             throw new Error('Error al obtener la última operación');
@@ -203,8 +203,8 @@ function obtenerUltimaOperacion() {
     .then(data => {
         console.log("Última operación obtenida:", data);
         let precio = document.getElementById("precio-nuevo").value;
-        agregarPrecio('http://khushiconfecciones.com/app_khushi/insertar_precio_operacion.php',data.id_operaciones,precio);
-        agregarOperacionProducto('http://khushiconfecciones.com/app_khushi/insert_operacion_a_producto.php',data.id_operaciones);
+        agregarPrecio('https://khushiconfecciones.com/app_khushi/insertar_precio_operacion.php',data.id_operaciones,precio);
+        agregarOperacionProducto('https://khushiconfecciones.com/app_khushi/insert_operacion_a_producto.php',data.id_operaciones);
         cargarOperaciones(subparteId,productoId);
         
         alert(`ID Operación: ${data.id_operaciones}, Operación: ${data.operaciones}, Cantidad: ${data.cantidad}, Máquina: ${data.maquina}, Precio: ${data.precio}`);
@@ -291,7 +291,7 @@ function agregarPrecio(URL,idOperacion,precio) {
 
 async function obtenerUltimaOperacionValor() {
     try {
-        let response = await fetch('http://khushiconfecciones.com/app_khushi/buscar_ultima_operacion.php');
+        let response = await fetch('https://khushiconfecciones.com/app_khushi/buscar_ultima_operacion.php');
         if (!response.ok) {
             throw new Error('Error al obtener la última operación');
         }
@@ -394,7 +394,7 @@ function procesarExcel() {
         
 
         
-        fetch('http://khushiconfecciones.com/app_khushi/agregar_operaciones.php', {
+        fetch('https://khushiconfecciones.com/app_khushi/agregar_operaciones.php', {
             method: 'POST',
             body: formData
         })
@@ -428,7 +428,7 @@ async function procesarExcel2() {
         
 
         try {
-            let response = await fetch('http://khushiconfecciones.com/app_khushi/agregar_operaciones.php', {
+            let response = await fetch('https://khushiconfecciones.com/app_khushi/agregar_operaciones.php', {
                 method: 'POST',
                 body: formData
             });
@@ -440,8 +440,8 @@ async function procesarExcel2() {
                 // Esperar la última operación antes de procesar las filas
                 let ultimaOperacion = await obtenerUltimaOperacionValor();
                 let precio = fila.precio;
-                agregarPrecio('http://khushiconfecciones.com/app_khushi/insertar_precio_operacion.php',ultimaOperacion,precio);
-                agregarOperacionProducto('http://khushiconfecciones.com/app_khushi/insert_operacion_a_producto.php',ultimaOperacion);
+                agregarPrecio('https://khushiconfecciones.com/app_khushi/insertar_precio_operacion.php',ultimaOperacion,precio);
+                agregarOperacionProducto('https://khushiconfecciones.com/app_khushi/insert_operacion_a_producto.php',ultimaOperacion);
                 
                 let subparteId = document.getElementById("subparte-id").textContent;
                 let productoId = document.getElementById("producto-id").textContent;
