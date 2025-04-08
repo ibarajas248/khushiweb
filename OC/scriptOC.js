@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const apiUrl = "http://khushiconfecciones.com/app_khushi/buscar_oc_empresa.php?id_empresa=1";
+    const apiUrl = "https://khushiconfecciones.com/app_khushi/buscar_oc_empresa.php?id_empresa=1";
     const tbody = document.getElementById("productos-tbody");
     const mensajeError = document.getElementById("mensaje-error");
     
