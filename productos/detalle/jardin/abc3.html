@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Scraping y Efecto Neural/Rizoma</title>
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+      background: transparent;
+      position: relative;
+      z-index: 1;
+    }
+    h1 {
+      color: #333;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    #progress {
+      margin-bottom: 20px;
+      color: #555;
+    }
+    /* Contenedor del contenido scrapeado sin scroll */
+    #result {
+      border: 1px solid #ccc;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 15px;
+      position: relative;
+      z-index: 2;
+      /* Se eliminan max-height y overflow para que no aparezca la barra central */
+    }
+    /* Canvas en fondo: ocupa toda la pantalla y se sitúa detrás */
+    #networkCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+  <h1>Scraping de Worldometers.info y Efecto Neural/Rizoma</h1>
+  <button id="scrapeBtn">Scrapear Contenido</button>
+  <div id="progress"></div>
+  <div id="result"></div>
+  
+  <!-- Canvas para el efecto neural/rizoma -->
+  <canvas id="networkCanvas"></canvas>
+  
+  <!-- Script de scraping -->
+  <script>
+    document.getElementById('scrapeBtn').addEventListener('click', async () => {
+      const progress = document.getElementById('progress');
+      const resultDiv = document.getElementById('result');
+      progress.textContent = "Obteniendo contenido de Worldometers.info...";
+      resultDiv.innerHTML = "";
+
+      // Usamos un proxy para evitar problemas de CORS
+      const proxyUrl = 'https://api.allorigins.hexocode.repl.co/get?disableCache=true&url=';
+      const targetUrl = 'https://www.worldometers.info/';
+      const fullUrl = proxyUrl + encodeURIComponent(targetUrl);
+
+      try {
+        const response = await fetch(fullUrl);
+        if (!response.ok) {
+          throw new Error(`Error en la respuesta: ${response.status}`);
+        }
+        const data = await response.json();
+        const htmlString = data.contents;
+
+        // Parsear el HTML obtenido
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlString, 'text/html');
+
+        // Buscar el elemento con la clase "content-home"
+        const contentHome = doc.querySelector('div.content-home');
+        if (contentHome) {
+          resultDiv.innerHTML = contentHome.innerHTML;
+          progress.textContent = "Contenido obtenido correctamente:";
+        } else {
+          progress.textContent = "No se encontró el elemento con la clase 'content-home'.";
+        }
+      } catch (error) {
+        progress.textContent = "Error al obtener el contenido: " + error.message;
+      }
+    });
+  </script>
+  
+  <!-- Script para el efecto neural/rizoma -->
+  <script>
+    const networkCanvas = document.getElementById('networkCanvas');
+    const ctx = networkCanvas.getContext('2d');
+
+    // Función para ajustar el tamaño del canvas
+    function resizeCanvas() {
+      networkCanvas.width = window.innerWidth;
+      networkCanvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+
+    // Configuración del efecto: número de partículas y distancia máxima para conectar
+    const numParticles = 100;
+    const maxDistance = 150;
+    let particles = [];
+
+    // Clase para cada partícula (nodo)
+    class Particle {
+      constructor() {
+        this.x = Math.random() * networkCanvas.width;
+        this.y = Math.random() * networkCanvas.height;
+        this.vx = (Math.random() - 0.5) * 1;
+        this.vy = (Math.random() - 0.5) * 1;
+        this.radius = 2;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        // Rebote en los bordes
+        if (this.x < 0 || this.x > networkCanvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > networkCanvas.height) this.vy *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = '#fff';
+        ctx.fill();
+      }
+    }
+
+    // Inicializar partículas
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < numParticles; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    // Dibuja líneas entre partículas cercanas
+    function drawLines() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < maxDistance) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(255,255,255,${1 - distance / maxDistance})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    // Función de animación
+    function animate() {
+      ctx.clearRect(0, 0, networkCanvas.width, networkCanvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      drawLines();
+      requestAnimationFrame(animate);
+    }
+
+    // Inicializa y ejecuta la animación
+    initParticles();
+    animate();
+
+    // Ajusta el canvas al redimensionar la ventana
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      initParticles();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ondas Interactivas Extremas</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: black;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        let width, height;
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener("resize", resize);
+        resize();
+
+        let time = 0;
+        let mouse = { x: width / 2, y: height / 2 };
+
+        window.addEventListener("mousemove", (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.lineWidth = 2;
+
+            for (let y = 0; y < height; y += 30) {
+                ctx.beginPath();
+                for (let x = 0; x < width; x += 20) {
+                    let dist = Math.sqrt((mouse.x - x) ** 2 + (mouse.y - y) ** 2);
+                    let wave = Math.sin(x * 0.02 + time) * 15;
+                    
+                    // 🔥 Deformación extrema con remolinos y explosión visual
+                    let effect = Math.exp(-dist * 0.002) * 100 * Math.sin(dist * 0.01 - time);
+                    
+                    ctx.lineTo(x, y + wave + effect);
+                }
+                ctx.strokeStyle = `hsl(${(y + time * 10) % 360}, 100%, 60%)`; // Colores dinámicos
+                ctx.stroke();
+            }
+            
+            time += 0.1;
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+</body>
+</html>

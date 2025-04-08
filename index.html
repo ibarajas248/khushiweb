@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu con Sidebar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="back">
+            <div class="menu container">
+                <a href="#" class="logo">KHUSHI</a>
+                <input type="checkbox" id="menu">
+                <label for="menu">
+                    <img src="images/menu.png" class="menu-icono" alt="Menú">
+                </label>    
+                <nav class="navbar">
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="OC/OC.html">OC</a></li>
+                        <li><a href="productos/productos.html">Productos</a></li>
+                        <li><a href="Pronosticador/pronosticador.html">Pronosticador</a></li>
+                        <li><a href="Produccion/produccion.html">Producción</a></li>
+                        <li><a href="reportes.html">Reportes</a></li>
+                        <li><a href="perfil.html">Perfil</a></li>
+                    </ul>
+                </nav>
+                <button class="sidebar-btn" onclick="openSidebar()">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <button class="close-btn" onclick="closeSidebar()">✖</button>
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="configuracion.html">Configuración</a></li>
+            <li><a href="soporte.html">Soporte</a></li>
+            <li><a href="cerrar_sesion.html">Cerrar Sesión</a></li>
+        </ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

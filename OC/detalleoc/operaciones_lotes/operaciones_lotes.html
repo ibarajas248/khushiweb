@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Producto</title>
+    <link rel="stylesheet" href="style_op_lotes.css">
+    
+</head>
+<body>
+    <div class="back">
+        <div class="menu container">
+            <a href="#" class="logo">KHUSHI</a>
+            <input type="checkbox" id="menu">
+            <label for="menu">
+                <img src="images/menu.png" class="menu-icono" alt="Menú">
+            </label>    
+            <nav class="navbar">
+                <ul>
+                    <li><a href="../../../index.html">Inicio</a></li>
+                    <li><a href="../../../OC/OC.html">OC</a></li>
+                    <li><a href="../../../productos/productos.html">Productos</a></li>
+                    <li><a href="../../../Pronosticador/pronosticador.html">Pronosticador</a></li>
+                    <li><a href="../../../Produccion/produccion.html">Producción</a></li>
+                    <li><a href="../../../reportes.html">Reportes</a></li>
+                    <li><a href="../../../perfil.html">Perfil</a></li>
+                </ul>
+            </nav>
+            <button class="sidebar-btn" onclick="openSidebar()">☰</button>
+        </div>
+        
+    </div>
+
+    <div class="container">
+            
+
+        <div class="content">
+            <button class ="boton_lista" id="btn-sin-asignar">Sin asignar</button>
+            <button class ="boton_lista" id="btn-asignado">Asignados</button>
+            <h2>Producción</h2>
+            <p id="mensaje-error" class="mensaje-error"></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Operación</th>
+                        <th>Sección</th>
+                        <th>cantidad</th>
+                        <th>Lote</th>
+                        <th>Completado</th>
+                        <th>Habilitado</th>
+                        <th>Empleado</th>
+
+                    </tr>
+                </thead>
+                <tbody id="productos-tbody">
+                    <!-- Aquí se insertarán los datos dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="ficha-container">
+        <div class="card">
+            <h2 id="nombre"></h2>
+            <p><strong>ID Producción:</strong> <span id="id"></span></p>
+            <p><strong>ID Orden:</strong> <span id="id_oc"></span></p>
+            <p><strong>Cantidad:</strong> <span id="cantidad"></span></p>
+            <p><strong>Precio:</strong> <span id="precio"></span></p>
+            
+        </div>
+       
+
+        <form id="form-agregar-operacion">
+            <label for="lotes">no configurado</label>
+            <input type="number" id="lotes" name="lotes" required>
+            <label for="cantidad">No configurado: </label>
+            <input type="number" id="Cantidad" name="Cantidad" required>
+            <label for="productoSelect">Selecciona un producto:</label>
+            <select id="productoSelect"></select>
+            
+        
+            
+            <button type="button" id="btnAgregarOperacion" class="back-button">Agregar Operación</button>
+
+        </form>
+            
+            <!-- Agregar un mensaje de carga -->
+            <p id="loading-message" style="display:none;">Cargando...</p>
+            
+            <!-- Agregar un mensaje de error/success -->
+            <p id="response-message" style="display:none;"></p>
+
+            
+        
+
+          
+    </div>
+</header>
+    
+
+    
+    <script src="script_op_lotes.js"></script>
+</body>
+</html>

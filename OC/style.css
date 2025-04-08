@@ -1,0 +1,408 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: white; /* Cambia el color según tu diseño */
+    z-index: 1000; /* Asegura que el header quede sobre otros elementos */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Agrega sombra para destacar */
+}
+body {
+    background: linear-gradient(90deg, rgb(253, 253, 253) 25%, rgb(112, 114, 233) 73%);
+    font-family: Arial, Helvetica, sans-serif;  /* Corregido 'dont-family' a 'font-family' */
+}
+
+.container {
+    width: 1100px;
+    margin: 0 auto;
+}
+
+.back {
+    height: 50px;  /* Establece un ancho fijo de 1100px */
+    padding: 32px;
+    background: #2A394F;
+    margin: 0 auto;  /* Centra el contenedor en la página */
+}
+
+
+.menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 24px;
+    color: #156ae9;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.menu .navbar ul li {
+    position: relative;
+    float: left;
+}
+
+.menu .navbar ul li a {
+    font-size: 18px;
+    padding: 20px;
+    color: #ffffff;
+    display: block;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    transition: box-shadow 0.3s ease; /* Transición suave para la sombra */
+}
+
+.menu .navbar ul li a:hover {
+    color: #156ae9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al pasar el cursor */
+}
+
+#menu {
+    display: none;
+}
+
+.menu-icono {
+    width: 25px;
+}
+
+.menu label {
+    cursor: pointer; /* Corregido 'cursos' a 'cursor' */
+    display: none;
+}
+
+@media (max-width: 991px) {
+    .menu {
+        padding: 30px 20px; /* Se consolidaron los paddings repetidos */
+    }
+
+    .back {
+        padding: 40px 0;
+    }
+
+    .menu label {
+        display: block;
+    }
+
+    .menu .navbar {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #2A394F;
+        display: none;
+        text-align: center; /* Centrado de los enlaces */
+    }
+
+    .menu .navbar ul li {
+        width: 100%;
+    }
+
+    /* Mostrar el menú cuando el checkbox #menu está marcado */
+    #menu:checked + label + .navbar {
+        display: block;
+    }
+}
+
+/*
+    Estilos de la página de productos
+*/
+main{
+    
+}
+
+main .container{
+    padding: 20px;
+    width: 80%;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(189, 140, 140, 0.1);
+    border-radius: 8px; 
+    margin-left: 23%;
+}
+
+
+main .container h2{
+    
+    text-align: center;
+
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+th {
+    background-color: #333;
+    color: white;
+}
+tr:hover {
+    background-color: #f1f1f1;
+}
+.producto-img {
+    max-width: 100px;
+    max-height: 100px;
+    display: block;
+    margin: 0 auto;
+}
+
+
+/* Estilo para el menú lateral */
+.sidebar {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 15px;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.sidebar h3 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    padding: 10px;
+    display: block;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background-color: #ddd;
+}
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    margin-left: 220px; /* Para dejar espacio para el menú lateral */
+}
+
+.content {
+    padding: 20px;
+    width: 100%;
+}
+.sidebar {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 15px;
+    position: fixed;
+    height: 100%;
+    top: 57px; /* Comienza en el punto 50px desde la parte superior */
+    left: 0;
+}
+.editar {
+    background-color: #a8d5e2; /* Azul suave */
+    color: #2c3e50; /* Azul oscuro para contraste */
+    border: 1px solid #90c1cf;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background 0.3s, border 0.3s;
+}
+
+.editar:hover {
+    background-color: #90c1cf; /* Azul un poco más oscuro */
+    border-color: #7caab9;
+}
+
+.eliminar {
+    background-color: #e2a8a8; /* Rojo suave */
+    color: #5a2c2c; /* Rojo oscuro para contraste */
+    border: 1px solid #cf9090;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background 0.3s, border 0.3s;
+}
+
+.eliminar:hover {
+    background-color: #cf9090; /* Rojo un poco más oscuro */
+    border-color: #b97c7c;
+}
+
+/* Espaciado en la tabla */
+td {
+    padding: 8px;
+}
+
+td button {
+    margin-right: 5px;
+}
+
+
+.ficha-container {
+    
+    background-color: #ffffff;
+    
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 20%;  /* Ancho fijo para el sidebar */
+    position: fixed;  /* Fijar la posición del sidebar */
+    top: 80px;  /* Separar el sidebar debajo del header */
+    left: 0;  /* Alineado a la izquierda */
+    bottom: 0;
+
+    .ficha-container #form-agregar-operacion {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ficha-container #form-agregar-operacion label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #444;
+}
+
+.ficha-container #form-agregar-operacion input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.ficha-container #form-agregar-operacion input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.ficha-container #form-agregar-operacion .back-button {
+    margin-top: 10px;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.ficha-container #form-agregar-operacion .back-button:hover {
+    background: #0056b3;
+}
+
+    overflow-y: auto;  /* Permitir desplazamiento vertical si el contenido es largo */
+}
+
+.ficha-container #form-agregar-operacion {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ficha-container #form-agregar-operacion label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #444;
+}
+
+.ficha-container #form-agregar-operacion input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.ficha-container #form-agregar-operacion input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.ficha-container #form-agregar-operacion .back-button {
+    margin-top: 10px;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.ficha-container #form-agregar-operacion .back-button:hover {
+    background: #0056b3;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+.modal-contenido {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+    text-align: center;
+}
+
+
+.accion-eliminar {
+    display: flex; /* Usamos flexbox para alinear elementos */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    gap: 10px; /* Espacio entre los íconos */
+}
+
+.icono-eliminar, .icono-editar {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.icono-eliminar:hover, .icono-editar:hover {
+    transform: scale(1.2);
+    opacity: 0.8;
+}

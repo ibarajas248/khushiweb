@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bosque Animado</title>
+    <style>
+        body { margin: 0; overflow: hidden; background: black; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        let width, height;
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener("resize", resize);
+        resize();
+
+        let trees = [];
+        let mouse = { x: width / 2, y: height / 2 };
+
+        function Tree(x, y, size, angle, depth) {
+            this.x = x;
+            this.y = y;
+            this.size = size;
+            this.angle = angle;
+            this.depth = depth;
+            this.branches = [];
+
+            if (depth < 5) {
+                this.branches.push(new Tree(x, y - size, size * 0.7, angle - Math.random() * 0.3, depth + 1));
+                this.branches.push(new Tree(x, y - size, size * 0.7, angle + Math.random() * 0.3, depth + 1));
+            }
+
+            this.update = function () {
+                let dx = (mouse.x - width / 2) * 0.0005;
+                this.angle += dx;
+
+                this.branches.forEach(branch => branch.update());
+            };
+
+            this.draw = function () {
+                ctx.strokeStyle = "white";
+                ctx.lineWidth = Math.max(1, 5 - depth);
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                let endX = x + Math.cos(angle) * size;
+                let endY = y - Math.sin(angle) * size;
+                ctx.lineTo(endX, endY);
+                ctx.stroke();
+
+                this.branches.forEach(branch => branch.draw());
+            };
+        }
+
+        function generateForest() {
+            trees = [];
+            for (let i = 0; i < 10; i++) {
+                let x = Math.random() * width;
+                let size = Math.random() * 50 + 50;
+                trees.push(new Tree(x, height, size, -Math.PI / 2, 0));
+            }
+        }
+
+        window.addEventListener("mousemove", (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        function draw() {
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, width, height);
+
+            trees.forEach(tree => {
+                tree.update();
+                tree.draw();
+            });
+
+            requestAnimationFrame(draw);
+        }
+
+        generateForest();
+        draw();
+    </script>
+</body>
+</html>

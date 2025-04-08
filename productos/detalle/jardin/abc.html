@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nombres en Animación Avanzada</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+        }
+        .name {
+            position: absolute;
+            font-size: 18px;
+            pointer-events: none;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-in-out;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container"></div>
+    <script>
+        const nombres = [
+            "Juan", "María", "Carlos", "Sofía", "Andrés", "Lucía", "Pedro", "Ana", "Fernando", "Isabel",
+            "Gabriel", "Valentina", "Diego", "Camila", "Javier", "Paula", "Hugo", "Clara", "Manuel", "Victoria",
+            "Ricardo", "Elena", "Sebastián", "Laura", "Daniel", "Gabriela", "Antonio", "Martina", "Cristian", "Alejandra",
+            "Esteban", "Natalia", "Oscar", "Patricia", "Roberto", "Juliana", "Fabián", "Diana", "Raúl", "Margarita"
+        ];
+        
+        const container = document.querySelector('.container');
+        const nameElements = [];
+
+        function createName(name) {
+            const span = document.createElement('span');
+            span.textContent = name;
+            span.classList.add('name');
+            span.style.left = Math.random() * window.innerWidth + 'px';
+            span.style.top = Math.random() * window.innerHeight + 'px';
+            container.appendChild(span);
+            nameElements.push(span);
+        }
+
+        nombres.forEach(name => createName(name));
+
+        function animateNames() {
+            nameElements.forEach(el => {
+                let x = Math.random() * window.innerWidth;
+                let y = Math.random() * window.innerHeight;
+                el.style.transform = `translate(${x - parseFloat(el.style.left)}px, ${y - parseFloat(el.style.top)}px)`;
+                el.style.opacity = Math.random() * 0.5 + 0.5; // Variación en opacidad
+            });
+        }
+
+        setInterval(animateNames, 3000);
+
+        document.addEventListener('mousemove', (e) => {
+            nameElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const dx = e.clientX - (rect.left + rect.width / 2);
+                const dy = e.clientY - (rect.top + rect.height / 2);
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 100) {
+                    el.style.transform = `translate(${dx * 0.7}px, ${dy * 0.7}px) scale(1.2)`;
+                    el.style.opacity = 1;
+                } else {
+                    el.style.opacity = Math.random() * 0.5 + 0.5;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

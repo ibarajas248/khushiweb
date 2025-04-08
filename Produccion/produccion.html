@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu con Sidebar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="back">
+            <div class="menu container">
+                <a href="#" class="logo">Logo</a>
+                <input type="checkbox" id="menu">
+                <label for="menu">
+                    <img src="images/menu.png" class="menu-icono" alt="Menú">
+                </label>    
+                <nav class="navbar">
+                    <ul>
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="../OC/OC.html">OC</a></li>
+                        <li><a href="../productos/productos.html">Productos</a></li>
+                        <li><a href="../Pronosticador/pronosticador.html">Pronosticador</a></li>
+                        <li><a href="../Produccion/produccion.html">Producción</a></li>
+                        
+                    </ul>
+                </nav>
+                <button class="sidebar-btn" onclick="openSidebar()">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <button class="close-btn" onclick="closeSidebar()">✖</button>
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="configuracion.html">Configuración</a></li>
+            <li><a href="soporte.html">Soporte</a></li>
+            <li><a href="cerrar_sesion.html">Cerrar Sesión</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="sidebar">
+                <h3>Opciones</h3>
+                <ul>
+                    <li><a href="#" class="option">opcion 1</a></li>
+                    <li><a href="#" class="option">opcion 2</a></li>
+                    <li><a href="#" class="option">opcion 3</a></li>
+                </ul>
+            </div>
+
+            <div class="content">
+                <h2> Operaciones Completadas </h2>
+                <p id="mensaje-error" class="mensaje-error"></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Producto</th>
+                            <th>subparte</th>
+                            <th>operaciones</th>
+                            <th>cantidad</th>
+                            <th>nombre</th>
+                            <th>Apellidos</th>
+                            <th>lote</th>
+                            <th>cantidad</th>
+                            <th>fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productos-tbody">
+                        <!-- Aquí se insertarán los datos dinámicamente -->
+                    </tbody>
+                    <div id="paginacion">
+                        <button id="btn-anterior" disabled>Anterior</button>
+                        <span id="pagina-actual"></span>
+                        <button id="btn-siguiente">Siguiente</button>
+                    </div>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

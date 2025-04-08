@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red de Plantas - Bosque Animado</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+        }
+        .name {
+            position: absolute;
+            font-size: 18px;
+            pointer-events: none;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-in-out;
+            opacity: 0.8;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="networkCanvas"></canvas>
+    <div class="container"></div>
+    
+    <script>
+        const nombres = [
+            "Frailejón", "Orquídea", "Guayacán", "Cedro", "Arrayán", "Chilco", "Cucharo", "Encenillo", "Palma de Cera", "Sauco",
+            "Aliso", "Drago", "Siete Cueros", "Manzanillo", "Yarumo", "Roble Andino", "Chicalá", "Gualanday", "Nogal", "Café de Monte",
+            "Tuno", "Escallonia", "Corono", "Fucsia", "Cedrillo", "Espino", "Mortiño", "Miconia", "Pino Colombiano", "Guamo"
+        ];
+
+        const container = document.querySelector('.container');
+        const nameElements = [];
+        const positions = [];
+
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function createName(name) {
+            const span = document.createElement('span');
+            span.textContent = name;
+            span.classList.add('name');
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            span.style.left = `${x}px`;
+            span.style.top = `${y}px`;
+            container.appendChild(span);
+            nameElements.push(span);
+            positions.push({ x, y, vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2 });
+        }
+
+        nombres.forEach(name => createName(name));
+
+        function drawConnections() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < positions.length; i++) {
+                for (let j = i + 1; j < positions.length; j++) {
+                    const dx = positions[i].x - positions[j].x;
+                    const dy = positions[i].y - positions[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 180) {
+                        let gradient = ctx.createLinearGradient(positions[i].x, positions[i].y, positions[j].x, positions[j].y);
+                        gradient.addColorStop(0, "rgba(34, 139, 34, 0.8)"); // Verde oscuro
+                        gradient.addColorStop(1, "rgba(50, 205, 50, 0.4)"); // Verde claro
+
+                        ctx.strokeStyle = gradient;
+                        ctx.lineWidth = 1.5;
+                        ctx.beginPath();
+                        ctx.moveTo(positions[i].x, positions[i].y);
+                        ctx.lineTo(positions[j].x, positions[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateNames() {
+            for (let i = 0; i < nameElements.length; i++) {
+                positions[i].x += positions[i].vx;
+                positions[i].y += positions[i].vy;
+
+                if (positions[i].x < 0 || positions[i].x > window.innerWidth) positions[i].vx *= -1;
+                if (positions[i].y < 0 || positions[i].y > window.innerHeight) positions[i].vy *= -1;
+
+                nameElements[i].style.left = `${positions[i].x}px`;
+                nameElements[i].style.top = `${positions[i].y}px`;
+            }
+
+            drawConnections();
+            requestAnimationFrame(animateNames);
+        }
+
+        animateNames();
+    </script>
+</body>
+</html>

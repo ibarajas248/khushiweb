@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha Técnica - Producto</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="back">
+            <div class="menu container">
+                <a href="#" class="logo">Logo</a>
+                <input type="checkbox" id="menu">
+                <label for="menu">
+                    <img src="images/menu.png" class="menu-icono" alt="">
+                </label>    
+                <nav class="navbar">
+                    <ul>
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="../OC/OC.html">OC</a></li>
+                        <li><a href="../productos/productos.html">Productos</a></li>
+                        <li><a href="../Pronosticador/pronosticador.html">Pronosticador</a></li>
+                        <li><a href="../Produccion/produccion.html">Producción</a></li>
+                        <li><a href="reportes.html">Reportes</a></li>
+                        <li><a href="perfil.html">Perfil</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="ficha-container">
+            <h2>Ficha Técnica del Producto</h2>
+            <img id="producto-imagen" class="producto-img" src="" alt="Imagen del producto">
+            
+            <div class="product-details">
+                <p><strong>ID del Producto:</strong> <span id="producto-id"></span></p>
+                <p><strong>Nombre:</strong> <span id="producto-nombre"></span></p>
+                <p><strong>Precio:</strong> <span id="producto-precio"></span></p>
+            </div>
+
+            <a href="inventario.html" class="back-button">Volver al Inventario</a>
+        </div>
+
+        <div class="contenido-principal">
+            <h2>Subpartes del Producto</h2>
+            <div id="subpartes-container">
+                <p>Cargando subpartes...</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+
+        
+
+
+
+        
+    document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    const nombre = urlParams.get("producto");
+    const precio = urlParams.get("precio");
+    const imagen = urlParams.get("imagen");
+
+    document.getElementById("producto-id").textContent = id;
+    document.getElementById("producto-nombre").textContent = nombre;
+    document.getElementById("producto-precio").textContent = `$${precio}`;
+
+    if (imagen) {
+        document.getElementById("producto-imagen").src = imagen;
+    } else {
+        document.getElementById("producto-imagen").style.display = "none";
+    }
+
+    // Cargar subpartes del producto
+    if (id) {
+        fetch(`http://khushiconfecciones.com/app_khushi/buscar_subparte.php?id_producto=${id}`)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Datos recibidos:", data); // Verifica los datos en la consola
+                const subpartesContainer = document.getElementById("subpartes-container");
+                subpartesContainer.innerHTML = ""; // Limpiar contenido anterior
+
+                if (data.length > 0) {
+                    data.forEach((subparte) => {
+                        // Crear un botón para cada subparte
+                        const subparteBoton = document.createElement("button");
+                        subparteBoton.textContent = `${subparte.id_subparte} - ${subparte.subparte}`;
+                        subparteBoton.classList.add("subparte-boton");
+
+                        // Agregar evento de clic al botón
+                        subparteBoton.addEventListener("click", () => {
+                            // Redirigir a otra página con los datos de la subparte y el id_producto
+                            window.location.href = `detalle_subparte/detalle_subparte.html?id_subparte=${subparte.id_subparte}&subparte=${subparte.subparte}&id_producto=${id}`;
+                        });
+
+                        subpartesContainer.appendChild(subparteBoton);
+                    });
+                } else {
+                    subpartesContainer.innerHTML = "<p>No hay subpartes registradas.</p>";
+                }
+            })
+            .catch((error) => {
+                console.error("Error al obtener las subpartes:", error);
+                document.getElementById("subpartes-container").innerHTML =
+                    "<p>Error al cargar las subpartes.</p>";
+            });
+    }
+});
+
+    </script>
+
+</body>
+</html>

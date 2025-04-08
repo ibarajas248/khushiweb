@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Árbol Germinando</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #000;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    let width, height;
+    
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    // Factor global de crecimiento (de 0 a 1)
+    let globalGrowth = 0;
+    // Velocidad de crecimiento (ajusta para que el crecimiento sea más rápido o lento)
+    const growthSpeed = 0.002;
+
+    /**
+     * Función recursiva para dibujar una rama (y sus sub-ramas)
+     * @param {number} x - Coordenada x de inicio.
+     * @param {number} y - Coordenada y de inicio.
+     * @param {number} length - Longitud completa de la rama.
+     * @param {number} angle - Ángulo en radianes (0 = derecha, PI/2 = hacia arriba).
+     * @param {number} thickness - Grosor de la rama.
+     * @param {number} depth - Niveles de recursión (cuanto mayor, más ramificado).
+     * @param {number} startTime - Umbral de crecimiento para iniciar esta rama (0 para el tronco, incrementa para las sub-ramas).
+     */
+    function drawBranch(x, y, length, angle, thickness, depth, startTime) {
+      if (depth === 0) return;
+      
+      // Calcula el progreso de crecimiento para esta rama.
+      // Si globalGrowth < startTime, la rama aún no ha comenzado a crecer.
+      let progress = (globalGrowth - startTime) / (1 - startTime);
+      progress = Math.min(Math.max(progress, 0), 1);
+      
+      // Longitud actual en función del progreso
+      const currentLength = length * progress;
+      const xEnd = x + currentLength * Math.cos(angle);
+      const yEnd = y - currentLength * Math.sin(angle);
+      
+      ctx.lineWidth = thickness;
+      ctx.strokeStyle = "#fff";
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(xEnd, yEnd);
+      ctx.stroke();
+      
+      // Solo se dibujan las ramas hijas cuando la rama actual se ha crecido por completo.
+      if (progress === 1) {
+        const newStartTime = startTime + 0.1; // Incrementa el umbral para las sub-ramas
+        drawBranch(xEnd, yEnd, length * 0.7, angle - Math.PI / 6, thickness * 0.7, depth - 1, newStartTime);
+        drawBranch(xEnd, yEnd, length * 0.7, angle + Math.PI / 6, thickness * 0.7, depth - 1, newStartTime);
+      }
+    }
+    
+    function animate() {
+      // Fondo semi-transparente para generar una estela suave
+      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+      ctx.fillRect(0, 0, width, height);
+      
+      // Incrementa el factor de crecimiento hasta llegar a 1 (árbol maduro)
+      if (globalGrowth < 1) {
+        globalGrowth += growthSpeed;
+      }
+      
+      // Dibuja el tronco: inicia en el centro inferior, crece hacia arriba
+      drawBranch(width / 2, height, 150, Math.PI / 2, 10, 8, 0);
+      
+      requestAnimationFrame(animate);
+    }
+    
+    animate();
+  </script>
+</body>
+</html>
