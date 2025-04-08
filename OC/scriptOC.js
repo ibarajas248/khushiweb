@@ -9,13 +9,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // Agregar evento al botón de agregar OC
     document.getElementById("submit").addEventListener("click", function(event) {
         event.preventDefault();
-        agregarOC("http://khushiconfecciones.com/app_khushi/agregar_oc_empresa.php");
+        agregarOC("https://khushiconfecciones.com/app_khushi/agregar_oc_empresa.php");
     });
 });
 
 // Ahora la función está en un ámbito global y puede ser llamada desde cualquier parte
 function cargarOrdenesDeCompra() {
-    fetch("http://khushiconfecciones.com/app_khushi/buscar_oc_empresa.php?id_empresa=1")
+    fetch("https://khushiconfecciones.com/app_khushi/buscar_oc_empresa.php?id_empresa=1")
         .then(response => {
             if (!response.ok) {
                 throw new Error("Error en la respuesta de la API");
@@ -54,7 +54,7 @@ function cargarOrdenesDeCompra() {
                 eliminarIcon.addEventListener("click", function (event) {
                     event.stopPropagation();
                     if (confirm("¿Estás seguro de que quieres eliminar esta orden de compra?")) {
-                        eliminarOC("http://khushiconfecciones.com/app_khushi/eliminar_oc.php", item.idOrdenCompra);
+                        eliminarOC("https://khushiconfecciones.com/app_khushi/eliminar_oc.php", item.idOrdenCompra);
                     }
                 });
 
@@ -102,7 +102,7 @@ document.getElementById("formEditar").addEventListener("submit", async function 
     formData.append("ordendeCompra", ordenCompra);
 
     try {
-        const response = await fetch("http://khushiconfecciones.com/app_khushi/editar_oc.php", {
+        const response = await fetch("https://khushiconfecciones.com/app_khushi/editar_oc.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: formData.toString()
