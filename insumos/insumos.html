@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Listado de Insumos</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background-color: #f0f0f0; }
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    .card h3 { margin: 0 0 10px; color: #007bff; }
+    .btn { background: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+    .btn-edit { background: #ffc107; margin-right: 10px; }
+  </style>
+</head>
+<body>
+
+  <h1>Lista de Insumos</h1>
+  <div id="insumos-container"></div>
+
+  <script>
+    async function cargarDatosDesdeServidor() {
+      const url = "http://khushiconfecciones.com/app_khushi/insumos/calculo_insumos.php";
+      const contenedor = document.getElementById("insumos-container");
+      contenedor.innerHTML = "";
+
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Respuesta del servidor no válida");
+
+        const data = await res.json();
+        data.forEach(insumo => {
+          const card = document.createElement("div");
+          card.className = "card";
+
+          const fecha = new Date(insumo.fecha_registro).toLocaleString("es-CO");
+
+          card.innerHTML = `
+            <h3>${insumo.nombre}</h3>
+            <p><strong>Descripción:</strong> ${insumo.descripcion}</p>
+            <p><strong>Cantidad:</strong> ${insumo.stock_actual} ${insumo.unidad_medida}</p>
+            <p><strong>Precio Unitario:</strong> $${Number(insumo.precio_unitario).toLocaleString()}</p>
+            <p><strong>Valor Stock Actual:</strong> ${insumo.valor_stock_actual}</p>
+            <p><strong>Valor Sin Estimar:</strong> ${insumo.valor_stock_actual_sin_estimar}</p>
+            <p><strong>Fecha de Registro:</strong> ${fecha}</p>
+            <button class="btn btn-edit" onclick="editarInsumo('${insumo.id_insumo}', '${insumo.nombre}')">Editar</button>
+            <button class="btn" onclick="eliminarInsumo('${insumo.id_insumo}', '${insumo.nombre}')">Eliminar</button>
+          `;
+          contenedor.appendChild(card);
+        });
+
+      } catch (error) {
+        console.error("Error al obtener datos:", error);
+        contenedor.innerHTML = `<p style="color:red;">Error al cargar los insumos.</p>`;
+      }
+    }
+
+    function editarInsumo(id, nombre) {
+      alert("Editar insumo: " + nombre + " (ID: " + id + ")");
+      // Aquí podrías mostrar un modal o formulario para editar
+    }
+
+    function eliminarInsumo(id, nombre) {
+      const confirmado = confirm(`¿Estás seguro de eliminar ${nombre}?`);
+      if (confirmado) {
+        alert("Eliminado (simulado): " + nombre);
+        // Aquí harías la llamada DELETE o POST para eliminar
+      }
+    }
+
+    // Cargar al inicio
+    cargarDatosDesdeServidor();
+  </script>
+</body>
+</html>

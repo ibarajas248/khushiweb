@@ -1,0 +1,15 @@
+@media (min-width: 768px) {
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 1030;
+    }
+
+    main {
+      margin-left: 16.5rem; /* Ancho estimado del sidebar */
+      padding: 1rem;
+    }
+  }
