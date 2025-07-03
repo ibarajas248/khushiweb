@@ -58,11 +58,11 @@
       <nav class="col-md-3 col-lg-2 d-none d-md-block bg-light sidebar p-3">
         <div class="sidebar">
           <ul class="nav flex-column">
-            <li class="nav-item"><a class="nav-link active" href="#"><i class="bi bi-house-fill"></i> Inicio</a></li>
+            <li class="nav-item"><a class="nav-link active" href="../index.html"><i class="bi bi-house-fill"></i> Inicio</a></li>
             <li class="nav-item"><a class="nav-link" href="productos/productos.html"><i class="bi bi-file-earmark"></i> Productos</a></li>
             <li class="nav-item"><a class="nav-link" href="../OC/OC.html"><i class="bi bi-cart"></i> Orden de compra</a></li>
             <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-people"></i> Operaciones asignadas</a></li>
-            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-people"></i> Operaciones completadas</a></li>
+            <li class="nav-item"><a class="nav-link" href="../Produccion/produccion.html"><i class="bi bi-people"></i> Operaciones completadas</a></li>
             <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-graph-up"></i> Seguimiento</a></li>
             <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-person-circle"></i> Perfil</a></li>
             <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-clock-history"></i> Tiempos</a></li>
@@ -87,24 +87,48 @@
 
       <!-- Main content -->
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+
+
         <h2>Operaciones Completadas</h2>
         <p id="mensaje-error" class="text-danger"></p>
+
+        <div class="row mb-3">
+  <div class="col-md-6">
+    <input type="text" id="buscador" class="form-control" placeholder="Buscar por producto, nombre o lote...">
+  </div>
+</div>
+
+
+
         <div class="table-responsive">
           <table class="table table-striped table-bordered">
             <thead class="table-dark">
-              <tr>
-                <th>ID</th>
-                <th>Producto</th>
-                <th>Subparte</th>
-                <th>Operaciones</th>
-                <th>Cantidad</th>
-                <th>Nombre</th>
-                <th>Apellidos</th>
-                <th>Lote</th>
-                <th>Cantidad</th>
-                <th>Fecha</th>
-              </tr>
-            </thead>
+  <tr>
+    <th>ID</th>
+    <th>Producto</th>
+    <th>Subparte</th>
+    <th>Operaciones</th>
+    <th>Cantidad</th>
+    <th>Nombre</th>
+    <th>Apellidos</th>
+    <th>Lote</th>
+    <th>Cantidad</th>
+    <th>Fecha</th>
+  </tr>
+  <tr class="bg-light text-dark">
+    <th><input type="text" class="form-control form-control-sm" id="filtro-id"></th>
+    <th><input type="text" class="form-control form-control-sm" id="filtro-producto"></th>
+    <th><input type="text" class="form-control form-control-sm" id="filtro-subparte"></th>
+    <th><input type="text" class="form-control form-control-sm" id="filtro-operaciones"></th>
+    <th></th>
+    <th><input type="text" class="form-control form-control-sm" id="filtro-nombre"></th>
+    <th><input type="text" class="form-control form-control-sm" id="filtro-apellidos"></th>
+    <th><input type="text" class="form-control form-control-sm" id="filtro-lote"></th>
+    <th></th>
+    <th><input type="text" class="form-control form-control-sm" id="filtro-fecha"></th>
+  </tr>
+</thead>
+
             <tbody id="productos-tbody">
               <!-- Datos dinámicos aquí -->
             </tbody>
