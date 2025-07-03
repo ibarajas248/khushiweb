@@ -103,3 +103,23 @@ function actualizarBotones() {
         }
     };
 }
+
+document.getElementById("btnDescargarExcel").addEventListener("click", function () {
+    const datosParaExcel = datosCompletos.map(item => ({
+        ID: item.id_lotes_operaciones,
+        Producto: item.producto,
+        Subparte: item.subparte,
+        Operaciones: item.operaciones,
+        Cantidad: item.cantidad,
+        Nombre: item.nombre,
+        Apellidos: item.Apellidos,
+        Lote: item.lote,
+        Fecha: item.fecha
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(datosParaExcel);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Operaciones");
+
+    XLSX.writeFile(workbook, "operaciones_completadas.xlsx");
+});

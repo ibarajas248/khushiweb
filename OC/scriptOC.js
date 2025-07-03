@@ -1,33 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const apiUrl = "https://khushiconfecciones.com/app_khushi/buscar_oc_empresa.php?id_empresa=1";
-    const tbody = document.getElementById("productos-tbody");
-    const mensajeError = document.getElementById("mensaje-error");
-    
-    // Llamar a la función al cargar la página
     cargarOrdenesDeCompra();
 
-    // Agregar evento al botón de agregar OC
     document.getElementById("submit").addEventListener("click", function(event) {
         event.preventDefault();
         agregarOC("https://khushiconfecciones.com/app_khushi/agregar_oc_empresa.php");
     });
 });
 
-// Ahora la función está en un ámbito global y puede ser llamada desde cualquier parte
 function cargarOrdenesDeCompra() {
     fetch("https://khushiconfecciones.com/app_khushi/buscar_oc_empresa.php?id_empresa=1")
         .then(response => {
-            if (!response.ok) {
-                throw new Error("Error en la respuesta de la API");
-            }
+            if (!response.ok) throw new Error("Error en la respuesta de la API");
             return response.json();
         })
         .then(data => {
             const tbody = document.getElementById("productos-tbody");
-            tbody.innerHTML = ""; // Limpiar contenido previo
+            tbody.innerHTML = "";
             data.forEach(item => {
                 const row = document.createElement("tr");
-
                 row.innerHTML = `
                     <td>${item.idOrdenCompra}</td>
                     <td>${item.ordendeCompra}</td>
@@ -36,22 +26,16 @@ function cargarOrdenesDeCompra() {
                         <img src="../assets/eliminar.png" alt="Eliminar" title="Eliminar" class="icono-eliminar" style="cursor:pointer; width:20px;">
                     </td>
                 `;
-
-                // Click general en la fila
-                row.addEventListener("click", function () {
+                row.addEventListener("click", () => {
                     window.location.href = `detalleoc/detalle_oc.html?id=${item.idOrdenCompra}&oc=${encodeURIComponent(item.ordendeCompra)}`;
                 });
 
-                // Íconos individuales
-                const editarIcon = row.querySelector(".icono-editar");
-                const eliminarIcon = row.querySelector(".icono-eliminar");
-
-                editarIcon.addEventListener("click", function (event) {
+                row.querySelector(".icono-editar").addEventListener("click", event => {
                     event.stopPropagation();
                     abrirModal(item.idOrdenCompra, item.ordendeCompra);
                 });
 
-                eliminarIcon.addEventListener("click", function (event) {
+                row.querySelector(".icono-eliminar").addEventListener("click", event => {
                     event.stopPropagation();
                     if (confirm("¿Estás seguro de que quieres eliminar esta orden de compra?")) {
                         eliminarOC("https://khushiconfecciones.com/app_khushi/eliminar_oc.php", item.idOrdenCompra);
@@ -62,30 +46,19 @@ function cargarOrdenesDeCompra() {
             });
         })
         .catch(error => {
-            const mensajeError = document.getElementById("mensaje-error");
-            mensajeError.textContent = "Error al cargar los datos.";
+            document.getElementById("mensaje-error").textContent = "Error al cargar los datos.";
             console.error("Error:", error);
         });
-}
-
-
-function mostrarAdvertencia() {
-    if (confirm("¿Estás seguro de que quieres abrir el modal?")) {
-        abrirModal();
-    }
 }
 
 function abrirModal(id, ordenCompra) {
     document.getElementById("editIdOrdenCompra").value = id;
     document.getElementById("editOrdenCompra").value = ordenCompra;
-    document.getElementById("modalEditar").style.display = "flex";
+    const modal = new bootstrap.Modal(document.getElementById("modalEditar"));
+    modal.show();
 }
 
-// Cerrar modal
-document.getElementById("cerrarModal").addEventListener("click", function () {
-    document.getElementById("modalEditar").style.display = "none";
-});
-
+// ✅ Cierra el modal usando Bootstrap
 document.getElementById("formEditar").addEventListener("submit", async function (event) {
     event.preventDefault();
 
@@ -109,12 +82,15 @@ document.getElementById("formEditar").addEventListener("submit", async function 
         });
 
         const data = await response.text();
-        console.log("Respuesta del servidor:", data);
+        alert("Respuesta del servidor: " + data); // 👀 Verifica respuesta
 
         if (data.includes("actualizada correctamente")) {
             alert("Orden de compra actualizada correctamente.");
-            document.getElementById("modalEditar").style.display = "none";
-            cargarOrdenesDeCompra(); // Recargar lista después de editar
+
+            const modal = bootstrap.Modal.getInstance(document.getElementById("modalEditar"));
+            if (modal) modal.hide(); // ✅ Cierre correcto del modal
+
+            cargarOrdenesDeCompra();
         } else {
             alert("Error: " + data);
         }
@@ -139,18 +115,15 @@ function agregarOC(URL) {
 
     fetch(URL, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: parametros.toString()
     })
     .then(response => response.text()) 
     .then(data => {
         console.log("Response:", data);
         alert("Orden de compra creada satisfactoriamente");
-
-        document.getElementById("operacion-nueva").value = ""; // Limpiar input
-        cargarOrdenesDeCompra(); // Recargar lista después de agregar
+        document.getElementById("operacion-nueva").value = "";
+        cargarOrdenesDeCompra();
     })
     .catch(error => {
         console.error("Error en la solicitud:", error);
@@ -169,7 +142,7 @@ function eliminarOC(URL, idOrdenCompra) {
     .then(response => response.text()) 
     .then(response => {
         alert("Orden de compra eliminada satisfactoriamente");
-        cargarOrdenesDeCompra(); // Recargar lista después de eliminar
+        cargarOrdenesDeCompra();
     })
     .catch(error => {
         alert("Error: " + error);

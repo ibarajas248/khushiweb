@@ -1,119 +1,168 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ficha Técnica - Producto</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+
+
 </head>
+
 <body>
 
-    <header>
-        <div class="back">
-            <div class="menu container">
-                <a href="#" class="logo">Logo</a>
-                <input type="checkbox" id="menu">
-                <label for="menu">
-                    <img src="images/menu.png" class="menu-icono" alt="">
-                </label>    
-                <nav class="navbar">
-                    <ul>
-                        <li><a href="../index.html">Inicio</a></li>
-                        <li><a href="../OC/OC.html">OC</a></li>
-                        <li><a href="../productos/productos.html">Productos</a></li>
-                        <li><a href="../Pronosticador/pronosticador.html">Pronosticador</a></li>
-                        <li><a href="../Produccion/produccion.html">Producción</a></li>
-                        <li><a href="reportes.html">Reportes</a></li>
-                        <li><a href="perfil.html">Perfil</a></li>
+    <nav class="navbar navbar-dark bg-dark sticky-top d-md-none">
+        <div class="container-fluid">
+            <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu"
+                aria-controls="mobileMenu">
+                <i class="bi bi-list"></i>
+            </button>
+            <span class="navbar-brand ms-2">Khushi confecciones</span>
+        </div>
+    </nav>
+
+    <!-- Sidebar para móviles (offcanvas) -->
+    <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="mobileMenuLabel">Menú</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- Reutilizamos el mismo menú -->
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link active" href="#"><i class="bi bi-house-fill"></i> Dashboard</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-file-earmark"></i> Orders</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-cart"></i> Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-people"></i> Customers</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-graph-up"></i> Reports</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-puzzle"></i> Integrations</a></li>
+            </ul>
+            <hr>
+            <h6 class="text-muted text-uppercase">Saved reports</h6>
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-file-earmark-text"></i> Current
+                        month</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-file-earmark-text"></i> Last
+                        quarter</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-file-earmark-text"></i> Social
+                        engagement</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-file-earmark-text"></i> Year-end
+                        sale</a></li>
+            </ul>
+            <hr>
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear-wide-connected"></i> Settings</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-door-closed"></i> Sign out</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar fijo para pantallas grandes -->
+            <nav class="col-md-3 col-lg-2 d-none d-md-block bg-light sidebar p-3">
+                <div class="sidebar">
+                    <ul class="nav flex-column">
+                        <li class="nav-item"><a class="nav-link active" href="#"><i class="bi bi-house-fill"></i>
+                                Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="productos/productos.html"><i
+                                    class="bi bi-file-earmark"></i> Productos</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-cart"></i> Orden de compra</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-people"></i> Operaciones
+                                asignadas</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-people"></i> Operaciones
+                                completadas</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-graph-up"></i> Seguimiento</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-puzzle"></i> Perfil</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-puzzle"></i> Tiempos</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-puzzle"></i> Insumos</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-puzzle"></i> Distribución de
+                                insumos</a>
+                        </li>
                     </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
+                    <hr>
+                    <h6 class="text-muted text-uppercase">Saved reports</h6>
+                    <ul class="nav flex-column mb-auto">
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-file-earmark-text"></i>
+                                Current month</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-file-earmark-text"></i> Last
+                                quarter</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-file-earmark-text"></i> Social
+                                engagement</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-file-earmark-text"></i>
+                                Year-end sale</a></li>
+                    </ul>
+                    <hr>
+                    <ul class="nav flex-column mb-auto">
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear-wide-connected"></i>
+                                Ajustes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-door-closed"></i> Cerrar
+                                sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
 
-    <main>
-        <div class="ficha-container">
-            <h2>Ficha Técnica del Producto</h2>
-            <img id="producto-imagen" class="producto-img" src="" alt="Imagen del producto">
-            
-            <div class="product-details">
-                <p><strong>ID del Producto:</strong> <span id="producto-id"></span></p>
-                <p><strong>Nombre:</strong> <span id="producto-nombre"></span></p>
-                <p><strong>Precio:</strong> <span id="producto-precio"></span></p>
-            </div>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+                <!-- Ficha Técnica -->
+                <div class="text-center mb-5">
+                    <h2>Ficha Técnica del Producto</h2>
+                    <img id="producto-imagen" class="img-fluid rounded mb-3" alt="Imagen del producto"
+                        style="max-height: 300px;">
+                    <div class="text-start">
+                        <p><strong>ID del Producto:</strong> <span id="producto-id"></span></p>
+                        <p><strong>Nombre:</strong> <span id="producto-nombre"></span></p>
+                        <p><strong>Precio:</strong> <span id="producto-precio"></span></p>
+                    </div>
+                    <a href="inventario.html" class="btn btn-secondary mt-3">Volver al Inventario</a>
+                </div>
 
-            <a href="inventario.html" class="back-button">Volver al Inventario</a>
-        </div>
+                <!-- Subpartes en una nueva fila -->
+                <!-- Subpartes en una nueva fila -->
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <section>
+                            <h2 class="mb-4">Subpartes del Producto</h2>
+                            <div id="subpartes-container" class="row g-3">
+                                <div class="col-12">
+                                    <p>Cargando subpartes...</p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
 
-        <div class="contenido-principal">
-            <h2>Subpartes del Producto</h2>
-            <div id="subpartes-container">
-                <p>Cargando subpartes...</p>
-            </div>
-        </div>
-    </main>
 
-    <script>
-
-        
+            </main>
 
 
+            <!-- Bootstrap JS -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-        
-    document.addEventListener("DOMContentLoaded", function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
-    const nombre = urlParams.get("producto");
-    const precio = urlParams.get("precio");
-    const imagen = urlParams.get("imagen");
+            <script>
 
-    document.getElementById("producto-id").textContent = id;
-    document.getElementById("producto-nombre").textContent = nombre;
-    document.getElementById("producto-precio").textContent = `$${precio}`;
+            </script>
+            <!-- Bootstrap JS -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    if (imagen) {
-        document.getElementById("producto-imagen").src = imagen;
-    } else {
-        document.getElementById("producto-imagen").style.display = "none";
-    }
-
-    // Cargar subpartes del producto
-    if (id) {
-        fetch(`https://khushiconfecciones.com/app_khushi/buscar_subparte.php?id_producto=${id}`)
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Datos recibidos:", data); // Verifica los datos en la consola
-                const subpartesContainer = document.getElementById("subpartes-container");
-                subpartesContainer.innerHTML = ""; // Limpiar contenido anterior
-
-                if (data.length > 0) {
-                    data.forEach((subparte) => {
-                        // Crear un botón para cada subparte
-                        const subparteBoton = document.createElement("button");
-                        subparteBoton.textContent = `${subparte.id_subparte} - ${subparte.subparte}`;
-                        subparteBoton.classList.add("subparte-boton");
-
-                        // Agregar evento de clic al botón
-                        subparteBoton.addEventListener("click", () => {
-                            // Redirigir a otra página con los datos de la subparte y el id_producto
-                            window.location.href = `detalle_subparte/detalle_subparte.html?id_subparte=${subparte.id_subparte}&subparte=${subparte.subparte}&id_producto=${id}`;
-                        });
-
-                        subpartesContainer.appendChild(subparteBoton);
-                    });
-                } else {
-                    subpartesContainer.innerHTML = "<p>No hay subpartes registradas.</p>";
-                }
-            })
-            .catch((error) => {
-                console.error("Error al obtener las subpartes:", error);
-                document.getElementById("subpartes-container").innerHTML =
-                    "<p>Error al cargar las subpartes.</p>";
-            });
-    }
-});
-
-    </script>
+            <script src="detalle.js"></script>
 
 </body>
+
 </html>
