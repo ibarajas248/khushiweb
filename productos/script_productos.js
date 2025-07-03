@@ -107,7 +107,7 @@ function mostrarProductos(data) {
           <h5 class="card-title">${producto.producto}</h5>
           <p class="card-text">Precio: $${Number(producto.precio).toLocaleString()}</p>
           <div class="mt-auto d-flex justify-content-between">
-            <button class="btn btn-sm btn-warning" onclick="event.stopPropagation(); editarProducto(${producto.id_producto})">
+            <button class="btn btn-sm btn-warning text-white"   style="background-color: rgb(89, 154, 216); border: 2px solid #2f75b5;" onclick="event.stopPropagation(); editarProducto(${producto.id_producto})">
               <i class="bi bi-pencil"></i> Editar
             </button>
             <button class="btn btn-sm btn-danger" onclick="event.stopPropagation(); eliminarProducto(${producto.id_producto})">
