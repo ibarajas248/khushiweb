@@ -13,55 +13,7 @@
   <link rel="stylesheet" href="assets/css/app.css">
   <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon">
 
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      overflow: hidden;
-    }
-
-    body {
-      display: flex;
-      flex-direction: column;
-    }
-
-    #contenido {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
-    }
-
-    .sidebar {
-      height: 100vh;
-      overflow-y: auto;
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      width: 240px;
-      background-color: #f8f9fa;
-      z-index: 1030;
-      border-right: 1px solid #dee2e6;
-      padding: 1rem;
-    }
-
-    .contenido-scroll {
-      margin-left: 240px;
-      height: 100vh;
-      overflow-y: auto;
-      padding: 2rem;
-      flex-grow: 1;
-    }
-
-    .tarjeta {
-      display: none;
-      border: 1px solid #dee2e6;
-      padding: 1.5rem;
-      border-radius: 0.5rem;
-      margin-top: 1.5rem;
-      background-color: #f8f9fa;
-    }
-  </style>
+  <link rel="stylesheet" href="styleasignadas.css">
 </head>
 <body>
 
@@ -185,81 +137,7 @@
   </div>
 
   <!-- JS -->
-  <script>
-    let habilitados = [];
-
-    document.addEventListener("DOMContentLoaded", () => {
-      cargarTareas(1);
-    });
-
-    function cargarTareas(idEmpresa) {
-      const url = `https://khushiconfecciones.com/app_khushi/consultas_lotes/buscar_todas_tareas_asignadas.php?id_empresa=${idEmpresa}`;
-
-      document.getElementById("mensaje-error").textContent = "Cargando...";
-
-      fetch(url)
-        .then(res => res.json())
-        .then(data => {
-          const tbody = document.getElementById("tabla-tareas");
-          tbody.innerHTML = "";
-          document.getElementById("mensaje-error").textContent = "";
-
-          habilitados = [];
-
-          data.forEach(item => {
-            let empleado = item.empleado?.trim() || "no asignado";
-
-            if (item.habilitado === "si" && item.completado === "no") {
-              habilitados.push(empleado);
-            }
-
-            const fila = document.createElement("tr");
-            fila.innerHTML = `
-              <td>${item.producto}</td>
-              <td>${item.subparte}</td>
-              <td>${item.operaciones}</td>
-              <td>${item.id_lotes_operaciones}</td>
-              <td>${item.cantidad}</td>
-              <td>${empleado}</td>
-              <td>${item.nombre}</td>
-              <td>${item.Apellidos}</td>
-              <td>${item.lote}</td>
-              <td>${item.completado}</td>
-              <td>${item.habilitado}</td>
-              <td>${item.fecha}</td>
-            `;
-
-            fila.addEventListener("contextmenu", (e) => {
-              e.preventDefault();
-              mostrarDetalle(item);
-            });
-
-            tbody.appendChild(fila);
-          });
-        })
-        .catch(error => {
-          console.error("Error:", error);
-          document.getElementById("mensaje-error").textContent = "Error de conexión.";
-        });
-    }
-
-    function mostrarDetalle(item) {
-      document.getElementById("detalleProducto").textContent = item.producto;
-      document.getElementById("detalleSubparte").textContent = item.subparte;
-      document.getElementById("detalleOperaciones").textContent = item.operaciones;
-      document.getElementById("detalleCantidad").textContent = item.cantidad;
-      document.getElementById("detalleNombre").textContent = item.nombre;
-      document.getElementById("detalleApellidos").textContent = item.Apellidos;
-      document.getElementById("detalleHabilitado").textContent = item.habilitado;
-
-      document.getElementById("tarjetaDetalle").style.display = "block";
-    }
-
-    function cerrarDetalle() {
-      document.getElementById("tarjetaDetalle").style.display = "none";
-    }
-  </script>
-
+  <script src="asignadas.js "></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
   <script src="assets/js/bootstrap.bundle.min.js"></script>
