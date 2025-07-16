@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Control de Insumos por OP</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    body {
+      padding: 2rem;
+      background-color: #f8f9fa;
+    }
+    .selected-row {
+      background-color: #d1e7dd !important;
+    }
+    table {
+      font-size: 0.875rem;
+    }
+    th, td {
+      white-space: nowrap;
+    }
+    .table-responsive {
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container-fluid">
+    <h3 class="mb-4 text-center">📦 Control de Insumos por Orden de Producción</h3>
+
+    <div class="d-flex justify-content-end mb-3">
+      <button id="btnExportar" class="btn btn-success">⬇️ Exportar a Excel</button>
+    </div>
+
+    <div class="table-responsive">
+      <table id="tablaInsumos" class="table table-bordered table-hover table-sm">
+        <thead class="table-dark" id="tablaHead"></thead>
+        <tbody id="tablaBody"></tbody>
+      </table>
+    </div>
+
+    <div id="mensaje" class="text-center mt-4 text-danger"></div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- SheetJS (xlsx) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <!-- Script principal -->
+  <script>
+    const API_URL = "https://khushiconfecciones.com/app_khushi/insumos/control_insumos_op.php";
+    let datosGlobales = []; // se guarda para exportar a Excel
+
+    fetch(API_URL)
+      .then(response => response.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          datosGlobales = data;
+
+          const tablaHead = document.getElementById("tablaHead");
+          const tablaBody = document.getElementById("tablaBody");
+
+          const headers = Object.keys(data[0]);
+          let headHTML = "<tr>";
+          headers.forEach(h => {
+            headHTML += `<th>${h}</th>`;
+          });
+          headHTML += "</tr>";
+          tablaHead.innerHTML = headHTML;
+
+          let bodyHTML = "";
+          data.forEach(row => {
+            bodyHTML += "<tr>";
+            headers.forEach(h => {
+              bodyHTML += `<td>${row[h] !== null ? row[h] : ''}</td>`;
+            });
+            bodyHTML += "</tr>";
+          });
+          tablaBody.innerHTML = bodyHTML;
+
+          // Seleccionar fila
+          tablaBody.addEventListener("click", function (e) {
+            const fila = e.target.closest("tr");
+            if (!fila) return;
+
+            tablaBody.querySelectorAll("tr").forEach(tr => tr.classList.remove("selected-row"));
+            fila.classList.add("selected-row");
+          });
+
+        } else {
+          document.getElementById("mensaje").textContent = "No se encontraron datos.";
+        }
+      })
+      .catch(error => {
+        console.error("Error al obtener datos:", error);
+        document.getElementById("mensaje").textContent = "Error al cargar datos desde la API.";
+      });
+
+    // Exportar a Excel
+    document.getElementById("btnExportar").addEventListener("click", () => {
+      if (datosGlobales.length === 0) {
+        alert("No hay datos para exportar.");
+        return;
+      }
+
+      const ws = XLSX.utils.json_to_sheet(datosGlobales);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Insumos");
+
+      const fecha = new Date().toISOString().split("T")[0];
+      XLSX.writeFile(wb, `control_insumos_${fecha}.xlsx`);
+    });
+  </script>
+
+</body>
+</html>
